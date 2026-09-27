@@ -1,0 +1,12 @@
+package com.studymate.goal;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+
+public interface GoalRepository extends JpaRepository<Goal, Integer> {
+
+    List<Goal> findAllByUserId(Integer userId);
+
+    Optional<Goal> findByIdAndUserId(Integer goalId, Integer userId);
+}
