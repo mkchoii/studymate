@@ -56,4 +56,6 @@ public class User {
         this.profileImageId = profileImageId;
         this.role = Role.USER;
     }
+
+    public void updateFinalGoal(String finalGoal) {this.finalGoal = finalGoal;}
 }
