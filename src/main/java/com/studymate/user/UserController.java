@@ -1,15 +1,11 @@
 package com.studymate.user;
 
-import com.studymate.user.dto.FinalGoalRequest;
-import com.studymate.user.dto.FinalGoalResponse;
+import com.studymate.user.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/me")
@@ -26,5 +22,45 @@ public class UserController {
         FinalGoalResponse response = userService.updateFinalGoal(userId, request);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<UserInfoResponse> getUserInfo(Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        UserInfoResponse response = userService.getUserInfo(userId);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/profile-image")
+    public ResponseEntity<ProfileImageResponse> updateUserProfileImage(@Valid @RequestBody ProfileImageRequest request, Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        ProfileImageResponse response = userService.updateProfileImage(userId, request);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<Void> updatePassword(@Valid @RequestBody PasswordUpdateRequest request, Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        userService.updatePassword(userId, request);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        userService.deleteUser(userId);
+
+        return ResponseEntity.noContent().build();
     }
 }

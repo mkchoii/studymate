@@ -57,5 +57,9 @@ public class User {
         this.role = Role.USER;
     }
 
-    public void updateFinalGoal(String finalGoal) {this.finalGoal = finalGoal;}
+    public void updateFinalGoal(String finalGoal) { this.finalGoal = finalGoal; }
+
+    public void updateProfileImage(Integer profileImageId) { this.profileImageId = profileImageId; }
+
+    public void updatePassword(String password) { this.password = password; }
 }
