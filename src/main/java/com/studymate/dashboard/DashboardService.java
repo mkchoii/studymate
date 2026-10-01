@@ -52,7 +52,7 @@ public class DashboardService {
                 .filter(Task::isCompleted)
                 .count();
         int inProgressCount = totalCount - completedCount;
-        int achievementRate = totalCount == 0 ? 0 : (int) Math.round(completedCount * 100.0 / totalCount);
+        int achievementRate = totalCount == 0 ? 0 : (int) (completedCount * 100.0 / totalCount);
 
         WeeklyProgressResponse weeklyProgress = new WeeklyProgressResponse(
                 achievementRate,
@@ -73,7 +73,7 @@ public class DashboardService {
                         int goalCompletedCount = (int) goalWeeklyTasks.stream()
                                 .filter(Task::isCompleted)
                                 .count();
-                        int goalAchievementRate = goalTotalCount == 0 ? 0 : (int) Math.round(goalCompletedCount * 100.0 / goalTotalCount);
+                        int goalAchievementRate = goalTotalCount == 0 ? 0 : (int) (goalCompletedCount * 100.0 / goalTotalCount);
 
                         return new GoalProgressResponse(
                                 goal.getId(),

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 @RestController
 @RequestMapping("/dashboard")
@@ -20,10 +21,14 @@ public class DashboardController {
 
     @GetMapping
     public ResponseEntity<DashboardResponse> getDashboard(
-            @RequestParam LocalDate date,
+            @RequestParam(required = false) LocalDate date,
             Authentication authentication
     ) {
         Integer userId = (Integer) authentication.getPrincipal();
+
+        if (date == null) {
+            date = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        }
 
         DashboardResponse response = dashboardService.getDashboard(userId, date);
 
