@@ -398,3 +398,22 @@
 .task-row.completed .task-name-button {
     color: #ACACAC;
 }
+
+.new-task-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: #121212;
+}
+
+.new-task-input::placeholder {
+    color: #ACACAC;
+}

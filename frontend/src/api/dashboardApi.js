@@ -99,3 +99,59 @@ export async function updateTask(taskId, content) {
 
     return await response.json();
 }
+
+export async function deleteTask(taskId) {
+    const response = await fetch(
+        `http://localhost:8080/tasks/${taskId}`,
+        {
+            method: 'DELETE',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let message = '태스크를 삭제하지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // response body가 없는 경우
+        }
+
+        throw new Error(message);
+    }
+}
+
+export async function createTask(goalId, taskDate, content) {
+    const response = await fetch(
+        'http://localhost:8080/tasks',
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                goalId,
+                taskDate,
+                content,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        let message = '태스크를 생성하지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // response body가 없는 경우
+        }
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}

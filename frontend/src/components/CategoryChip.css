@@ -91,3 +91,11 @@ button.category-chip {
 .category-study.selected {
     border-color: #908986;
 }
+
+.category-chip.small {
+    height: 19px;
+    padding: 4px 6px;
+
+    font-size: 10px;
+    line-height: 12px;
+}

@@ -3,12 +3,20 @@ import TaskRow from './TaskRow';
 
 import CategoryChip from '../CategoryChip';
 import TaskDetailModal from '../modal/TaskDetailModal';
+import NewTaskRow from './NewTaskRow';
 
 import chevronUpIcon from '../../assets/icons/chevron-up.svg';
 import chevronDownIcon from '../../assets/icons/chevron-down.svg';
 import addTaskIcon from '../../assets/icons/add.svg';
 
-function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
+function GoalGroupedTaskList({ 
+    goal, 
+    selectedDate,
+    onCheckTask, 
+    onEditTask, 
+    onDeleteTask,
+    onCreateTask
+}) {
     const [isExpanded, setIsExpanded] = useState(true);
     const sortedTasks = [...goal.tasks].sort((a, b) => {
         if (a.isCompleted !== b.isCompleted) {
@@ -20,6 +28,8 @@ function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
 
     const [openTaskId, setOpenTaskId] = useState(null);
     const [taskText, setTaskText] = useState('');
+
+    const [isCreatingTask, setIsCreatingTask] = useState(false);
 
     const handleClickTask = (task) => {
         setOpenTaskId(task.taskId);
@@ -49,6 +59,40 @@ function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
         }
     };
 
+    const handleDeleteTask = async () => {
+        if (openTaskId === null) {
+            return;
+        }
+
+        const success = await onDeleteTask(openTaskId);
+
+        if (success) {
+            setOpenTaskId(null);
+            setTaskText('');
+        }
+    };
+
+    const handleClickAddTask = () => {
+        setIsExpanded(true);
+        setIsCreatingTask(true);
+    };
+
+    const handleCreateTask = async (content) => {
+        const success = await onCreateTask(
+            goal.goalId,
+            selectedDate,
+            content
+        );
+
+        if (success) {
+            setIsCreatingTask(false);
+        }
+    };
+
+    const handleCancelCreateTask = () => {
+        setIsCreatingTask(false);
+    }
+
     return (
         <div className="goal-task-group">
             <div className="goal-task-header">
@@ -64,6 +108,8 @@ function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
                     <button
                         type="button"
                         className="add-task-button"
+                        onClick={handleClickAddTask}
+                        aria-label={`${goal.goalName} 태스크 추가`}
                     >
                         <img
                             src={addTaskIcon}
@@ -89,6 +135,13 @@ function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
 
             {isExpanded && (
                 <div className="goal-task-rows">
+                    {isCreatingTask && (
+                        <NewTaskRow
+                            onCreate={handleCreateTask}
+                            onCancel={handleCancelCreateTask}
+                        />
+                    )}
+
                     {sortedTasks.map((task) => (
                         <TaskRow
                             key={task.taskId}
@@ -105,9 +158,7 @@ function GoalGroupedTaskList({ goal, onCheckTask, onEditTask }) {
                     text={taskText}
                     onChangeText={setTaskText}
                     onEdit={handleEditTask}
-                    onDelete={() => {
-                        // 삭제 API 연결 예정
-                    }}
+                    onDelete={handleDeleteTask}
                     onClose={handleCloseTaskModal}
                 />
             )}

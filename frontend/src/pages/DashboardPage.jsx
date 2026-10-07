@@ -3,7 +3,7 @@ import { updateFinalGoal } from '../api/userApi';
 
 import UserHeader from '../components/layout/UserHeader';
 import GoalSummaryCard from '../components/dashboard/GoalSummaryCard';
-// import PersonalizedProgressCard from '../components/dashboard/PersonalizedProgressCard';
+import PersonalizedProgressCard from '../components/dashboard/PersonalizedProgressCard';
 import WeekCalendar from '../components/dashboard/WeekCalendar';
 import TaskListCard from '../components/dashboard/TaskListCard';
 import FinalGoalEditModal from '../components/modal/FinalGoalEditModal';
@@ -14,6 +14,8 @@ import {
     getDashboard,
     updateTaskCompletion,
     updateTask,
+    deleteTask,
+    createTask,
 } from '../api/dashboardApi';
 
 import './DashboardPage.css';
@@ -30,6 +32,8 @@ function DashboardPage() {
 
     const [finalGoalInput, setFinalGoalInput] = useState('');
 
+    const [selectedGoalId, setSelectedGoalId] = useState(null);
+
     const loadDashboard = async (date) => {
         try {
             const data = await getDashboard(date);
@@ -44,11 +48,23 @@ function DashboardPage() {
     }, []);
 
     const handleClickMore = () => {
-        setTopCardMode((prev) =>
-            prev === 'finalGoal'
-                ? 'personalized'
-                : 'finalGoal'
-        );
+        if (topCardMode === 'finalGoal') {
+            const goals = dashboard.goalProgress;
+
+            if (goals.length > 0) {
+                const randomIndex = Math.floor(
+                    Math.random() * goals.length
+                );
+
+                setSelectedGoalId(
+                    goals[randomIndex].goalId
+                );
+            }
+
+            setTopCardMode('personalized');
+        } else {
+            setTopCardMode('finalGoal');
+        }
     };
 
     const handleSelectDate = (date) => {
@@ -107,6 +123,61 @@ function DashboardPage() {
         }
     };
 
+    const handleDeleteTask = async (taskId) => {
+        try {
+            await deleteTask(taskId);
+
+            setDashboard((prev) => ({
+                ...prev,
+                goals: prev.goals.map((goal) => ({
+                    ...goal,
+                    tasks: goal.tasks.filter(
+                        (task) => task.taskId !== taskId
+                    ),
+                })),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    const handleCreateTask = async (
+        goalId,
+        taskDate,
+        content
+    ) => {
+        try {
+            const createdTask = await createTask(
+                goalId,
+                taskDate,
+                content
+            );
+
+            setDashboard((prev) => ({
+                ...prev,
+                goals: prev.goals.map((goal) =>
+                    goal.goalId === createdTask.goalId
+                        ? {
+                            ...goal,
+                            tasks: [
+                                createdTask,
+                                ...goal.tasks,
+                            ],
+                        }
+                        : goal
+                ),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
     // 최종 목표 수정 팝업 열기
     const handleOpenFinalGoalEditPopup = () => {
         console.log('최종 목표 수정 클릭');
@@ -151,10 +222,6 @@ function DashboardPage() {
         return <div>대시보드를 불러오는 중입니다...</div>;
     }
 
-    console.log(
-        'isFinalGoalEditModalOpen:',
-        isFinalGoalEditModalOpen
-    );
     return (
         <div className="dashboard-page">
             <div className="dashboard-container">
@@ -184,9 +251,11 @@ function DashboardPage() {
                             }
                         />
                     ) : (
-                        <div className="personalized-progress-placeholder">
-                            개인화 진행률
-                        </div>
+                        <PersonalizedProgressCard
+                            nickname={dashboard.nickname}
+                            goalProgress={dashboard.goalProgress}
+                            selectedGoalId={selectedGoalId}
+                        />
                     )}
 
                     <WeekCalendar
@@ -195,9 +264,12 @@ function DashboardPage() {
                     />
 
                     <TaskListCard
+                        selectedDate={dashboard.selectedDate}
                         goals={dashboard.goals}
                         onCheckTask={handleCheckTask}
                         onEditTask={handleEditTask}
+                        onDeleteTask={handleDeleteTask}
+                        onCreateTask={handleCreateTask}
                     />
                 </main>
 

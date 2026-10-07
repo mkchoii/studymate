@@ -1,0 +1,100 @@
+.personalized-progress-card {
+    box-sizing: border-box;
+    width: 395px;
+    height: 185px;
+    padding: 10px 22px 24px;
+
+    background: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 8px;
+}
+
+.personalized-message-text {
+    margin: 0 0 7px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    white-space: pre-line;
+    color: #000000;
+}
+
+.goal-progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.goal-progress-row {
+    width: 100%;
+}
+
+.goal-progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.goal-progress-percent {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 0.04em;
+
+    color: #acacac;
+}
+
+.goal-progress-background {
+    width: 100%;
+    height: 12px;
+    overflow: hidden;
+
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 18px;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 18px 0 0 18px;
+}
+
+/* 자격증 */
+.progress-certificate {
+    background: rgba(121, 144, 248, 0.5);
+}
+
+/* 어학 */
+.progress-language {
+    background: rgba(70, 207, 139, 0.5);
+}
+
+/* 면접 */
+.progress-interview {
+    background: rgba(188, 94, 173, 0.5);
+}
+
+/* 자기소개서·포트폴리오 */
+.progress-portfolio {
+    background: rgba(241, 175, 117, 0.5);
+}
+
+/* 직무·기업 탐색 */
+.progress-career_exploration {
+    background: rgba(233, 124, 204, 0.5);
+}
+
+/* 대외활동·프로젝트 */
+.progress-activity_project {
+    background: rgba(229, 119, 121, 0.5);
+}
+
+/* 공부 */
+.progress-study {
+    background: rgba(144, 137, 134, 0.5);
+}

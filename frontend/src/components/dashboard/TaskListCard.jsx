@@ -1,6 +1,13 @@
 import GoalGroupedTaskList from './GoalGroupedTaskList';
 
-function TaskListCard({ goals, onCheckTask, onEditTask }) {
+function TaskListCard({ 
+    selectedDate, 
+    goals, 
+    onCheckTask, 
+    onEditTask, 
+    onDeleteTask, 
+    onCreateTask,
+}) {
     return (
         <section className="task-section">
             <button
@@ -9,14 +16,17 @@ function TaskListCard({ goals, onCheckTask, onEditTask }) {
             >
                 세부목표 관리
             </button>
-        
+
             <div className="task-list-card">
                 {goals.slice(0, 3).map((goal) => (
                     <GoalGroupedTaskList
                         key={goal.goalId}
                         goal={goal}
+                        selectedDate={selectedDate}
                         onCheckTask={onCheckTask}
                         onEditTask={onEditTask}
+                        onDeleteTask={onDeleteTask}
+                        onCreateTask={onCreateTask}
                     />
                 ))}
             </div>

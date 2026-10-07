@@ -5,10 +5,11 @@ function CategoryChip({
     label,
     isSelected = false,
     onClick,
+    size = 'default',
 }) {
     const className = `category-chip category-${category.value.toLowerCase()} ${
         isSelected ? 'selected' : ''
-    }`;
+    } ${size === 'small' ? 'small' : ''}`;
 
     // 클릭 기능이 있는 경우
     if (onClick) {
