@@ -78,6 +78,7 @@ public class DashboardService {
                         return new GoalProgressResponse(
                                 goal.getId(),
                                 goal.getGoalName(),
+                                goal.getCategory(),
                                 goalAchievementRate
                         );
                 })
