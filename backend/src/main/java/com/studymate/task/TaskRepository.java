@@ -30,4 +30,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             LocalDate startDate,
             LocalDate endDate
     );
+
+    void deleteAllByGoalUserId(Integer userId);
 }

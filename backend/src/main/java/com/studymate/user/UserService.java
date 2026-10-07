@@ -1,7 +1,12 @@
 package com.studymate.user;
 
 import com.studymate.BusinessException;
+import com.studymate.goal.GoalRepository;
+import com.studymate.invite.InviteRepository;
+import com.studymate.study.StudyMemberRepository;
+import com.studymate.task.TaskRepository;
 import com.studymate.user.dto.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +20,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TaskRepository taskRepository;
+    private final GoalRepository goalRepository;
+    private final StudyMemberRepository studyMemberRepository;
+    private final InviteRepository inviteRepository;
 
     public FinalGoalResponse updateFinalGoal(Integer userId, FinalGoalRequest request) {
 
@@ -94,6 +103,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public void deleteUser(Integer userId) {
 
         User user = userRepository.findById(userId)
@@ -101,6 +111,10 @@ public class UserService {
                         HttpStatus.NOT_FOUND,
                         "사용자를 찾을 수 없습니다."
                 ));
+
+        taskRepository.deleteAllByGoalUserId(userId);
+        goalRepository.deleteAllByUserId(userId);
+        studyMemberRepository.deleteAllByUserId(userId);
 
         userRepository.delete(user);
     }
