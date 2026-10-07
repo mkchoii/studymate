@@ -97,7 +97,8 @@ public class DashboardService {
                                 .map(task -> new DashboardTaskResponse(
                                         task.getId(),
                                         task.getContent(),
-                                        task.isCompleted()
+                                        task.isCompleted(),
+                                        task.getCreatedAt()
                                 ))
                                 .toList();
 
