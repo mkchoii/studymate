@@ -2,8 +2,10 @@ package com.studymate.goal;
 
 import com.studymate.BusinessException;
 import com.studymate.goal.dto.*;
+import com.studymate.task.TaskRepository;
 import com.studymate.user.User;
 import com.studymate.user.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,19 @@ public class GoalService {
 
     private final GoalRepository goalRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
 
+    @Transactional
     public GoalResponse createGoal(Integer userId, GoalCreateRequest request) {
+
+        long goalCount = goalRepository.countByUserId(userId);
+
+        if (goalCount >= 3) {
+            throw new BusinessException(
+                    HttpStatus.BAD_REQUEST,
+                    "세부목표는 최대 3개까지만 설정할 수 있습니다."
+            );
+        }
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(
@@ -96,6 +109,7 @@ public class GoalService {
         );
     }
 
+    @Transactional
     public void deleteGoal(Integer userId, Integer goalId) {
 
         Goal goal = goalRepository.findByIdAndUserId(goalId, userId)
@@ -104,6 +118,16 @@ public class GoalService {
                         "세부 목표를 찾을 수 없습니다."
                 ));
 
+        long goalCount = goalRepository.countByUserId(userId);
+
+        if (goalCount <= 1) {
+            throw new BusinessException(
+                    HttpStatus.BAD_REQUEST,
+                    "세부목표는 최소 1개 이상 존재해야 합니다."
+            );
+        }
+
+        taskRepository.deleteAllByGoalId(goalId);
         goalRepository.delete(goal);
     }
 }

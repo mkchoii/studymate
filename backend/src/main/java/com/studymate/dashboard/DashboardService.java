@@ -73,7 +73,7 @@ public class DashboardService {
                         int goalCompletedCount = (int) goalWeeklyTasks.stream()
                                 .filter(Task::isCompleted)
                                 .count();
-                        int goalAchievementRate = goalTotalCount == 0 ? 0 : (int) (goalCompletedCount * 100.0 / goalTotalCount);
+                        Integer goalAchievementRate = goalTotalCount == 0 ? null : (int) (goalCompletedCount * 100.0 / goalTotalCount);
 
                         return new GoalProgressResponse(
                                 goal.getId(),

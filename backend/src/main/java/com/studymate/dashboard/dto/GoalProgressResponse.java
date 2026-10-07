@@ -11,5 +11,5 @@ public class GoalProgressResponse {
     private Integer goalId;
     private String goalName;
     private Category category;
-    private int achievementRate;
+    private Integer achievementRate;
 }

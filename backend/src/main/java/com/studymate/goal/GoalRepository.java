@@ -12,5 +12,6 @@ public interface GoalRepository extends JpaRepository<Goal, Integer> {
     List<Goal> findAllByUserIdAndCategory(Integer userId, Category category);
     boolean existsByUserId(Integer userId);
     void deleteAllByUserId(Integer userId);
+    long countByUserId(Integer userId);
 
 }
