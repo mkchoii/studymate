@@ -1,0 +1,68 @@
+.goal-edit-form {
+    box-sizing: border-box;
+    width: 346px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.goal-edit-categories {
+    width: 336px;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+}
+
+.goal-edit-input-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.goal-edit-input {
+    box-sizing: border-box;
+    width: 235px;
+    height: 30px;
+
+    padding: 0 11px;
+
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 12px;
+    outline: none;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0.04em;
+
+    color: #acacac;
+}
+
+.goal-edit-submit {
+    width: 71px;
+    height: 30px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #393433;
+    border: none;
+    border-radius: 12px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0.04em;
+
+    color: #ffffff;
+
+    cursor: pointer;
+}

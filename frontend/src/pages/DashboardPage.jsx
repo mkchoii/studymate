@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { updateFinalGoal } from '../api/userApi';
+import { createGoal, updateGoal, deleteGoal } from '../api/goalApi';
 
 import UserHeader from '../components/layout/UserHeader';
 import GoalSummaryCard from '../components/dashboard/GoalSummaryCard';
@@ -7,6 +8,7 @@ import PersonalizedProgressCard from '../components/dashboard/PersonalizedProgre
 import WeekCalendar from '../components/dashboard/WeekCalendar';
 import TaskListCard from '../components/dashboard/TaskListCard';
 import FinalGoalEditModal from '../components/modal/FinalGoalEditModal';
+import GoalManagementModal from '../components/modal/GoalManagementModal';
 
 import vectorIcon from '../assets/icons/vector.svg';
 
@@ -25,10 +27,9 @@ function DashboardPage() {
 
     const [topCardMode, setTopCardMode] = useState('finalGoal');
 
-    const [
-        isFinalGoalEditModalOpen,
-        setIsFinalGoalEditModalOpen,
-    ] = useState(false);
+    const [isFinalGoalEditModalOpen, setIsFinalGoalEditModalOpen] = useState(false);
+
+    const [isGoalManagementOpen, setIsGoalManagementOpen] = useState(false);
 
     const [finalGoalInput, setFinalGoalInput] = useState('');
 
@@ -218,6 +219,107 @@ function DashboardPage() {
         }
     };
 
+    const handleUpdateGoal = async (
+        goalId,
+        category,
+        goalName
+    ) => {
+        try {
+            const updatedGoal = await updateGoal(goalId, {
+                category,
+                goalName,
+            });
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                goals: prev.goals.map((goal) =>
+                    goal.goalId === goalId
+                        ? {
+                            ...goal,
+                            category: updatedGoal.category,
+                            goalName: updatedGoal.goalName,
+                        }
+                        : goal
+                ),
+
+                goalProgress: prev.goalProgress.map((goal) =>
+                    goal.goalId === goalId
+                        ? {
+                            ...goal,
+                            category: updatedGoal.category,
+                            goalName: updatedGoal.goalName,
+                        }
+                        : goal
+                ),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    const handleDeleteGoal = async (goalId) => {
+        try {
+            await deleteGoal(goalId);
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                goals: prev.goals.filter(
+                    (goal) => goal.goalId !== goalId
+                ),
+
+                goalProgress: prev.goalProgress.filter(
+                    (goal) => goal.goalId !== goalId
+                ),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    const handleCreateGoal = async (category, goalName) => {
+        try {
+            const createdGoal = await createGoal(
+                category,
+                goalName
+            );
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                goals: [
+                    {
+                        ...createdGoal,
+                        tasks: [],
+                    },
+                    ...prev.goals,
+                ],
+
+                goalProgress: [
+                    {
+                        goalId: createdGoal.goalId,
+                        goalName: createdGoal.goalName,
+                        category: createdGoal.category,
+                        achievementRate: null,
+                    },
+                    ...prev.goalProgress,
+                ],
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
     if (!dashboard) {
         return <div>대시보드를 불러오는 중입니다...</div>;
     }
@@ -263,6 +365,14 @@ function DashboardPage() {
                         onSelectDate={handleSelectDate}
                     />
 
+                    <button
+                        type="button"
+                        className="goal-manage-button"
+                        onClick={() => setIsGoalManagementOpen(true)}
+                    >
+                        세부목표 관리
+                    </button>
+
                     <TaskListCard
                         selectedDate={dashboard.selectedDate}
                         goals={dashboard.goals}
@@ -279,6 +389,16 @@ function DashboardPage() {
                         onChangeText={setFinalGoalInput}
                         onConfirm={handleConfirmFinalGoal}
                         onClose={handleCloseFinalGoalEditPopup}
+                    />
+                )}
+
+                {isGoalManagementOpen && (
+                    <GoalManagementModal
+                        goals={dashboard.goals}
+                        onCreate={handleCreateGoal}
+                        onUpdate={handleUpdateGoal}
+                        onDelete={handleDeleteGoal}
+                        onClose={() => setIsGoalManagementOpen(false)}
                     />
                 )}
             </div>
