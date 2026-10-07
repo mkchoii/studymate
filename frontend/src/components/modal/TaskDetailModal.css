@@ -1,0 +1,84 @@
+.task-detail-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.task-detail-modal {
+    position: relative;
+
+    width: 381px;
+    height: 195px;
+
+    background: #FFFFFF;
+    border-radius: 20px;
+}
+
+.task-detail-modal-close {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: 18px;
+    top: 13px;
+
+    padding: 0;
+    border: none;
+    background: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.task-detail-modal-close-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.task-detail-modal-input {
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 235px;
+    height: 30px;
+    left: 73px;
+    top: 61px;
+
+    padding: 0 11px;
+
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 12px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0.04em;
+
+    color: #ACACAC;
+
+    outline: none;
+}
+
+.task-detail-modal-buttons {
+    position: absolute;
+    top: 104px;
+    left: 104px;
+
+    display: flex;
+    gap: 32px;
+}
+
+.task-detail-modal-buttons .small-button {
+    width: 71px;
+    height: 30px;
+}

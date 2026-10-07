@@ -1,0 +1,23 @@
+.header {
+    box-sizing: border-box;
+    width: 100%;
+    height: 76px;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 0 25px 1px;
+
+    background: #FFFFFF;
+}
+
+.header-title {
+    margin: 0;
+
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+}

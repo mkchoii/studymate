@@ -1,0 +1,28 @@
+.small-button {
+    box-sizing: border-box;
+
+    width: 71px;
+    height: 30px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 12px;
+    background: #393433;
+
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: 0.04em;
+
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.small-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

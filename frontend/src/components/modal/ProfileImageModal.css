@@ -1,0 +1,122 @@
+.profile-modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    z-index: 1000;
+}
+
+.profile-image-modal {
+    box-sizing: border-box;
+
+    position: relative;
+
+    width: 381px;
+    height: 456px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #FFFFFF;
+    border-radius: 20px;
+}
+
+/* 닫기 */
+
+.profile-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 18px;
+
+    width: 12px;
+    height: 12px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.profile-modal-close img {
+    display: block;
+    width: 12px;
+    height: 12px;
+}
+
+/* 제목 */
+
+.profile-modal-title {
+    margin: 49px 0 0;
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+
+    color: #000000;
+}
+
+/* 이미지 2 × 2 */
+
+.profile-image-options {
+    width: 255px;
+    height: 255px;
+
+    margin-top: 28px;
+
+    display: grid;
+    grid-template-columns: 120px 120px;
+    grid-template-rows: 120px 120px;
+    gap: 15px;
+}
+
+/* 각각의 선택 버튼 */
+
+.profile-image-option {
+    box-sizing: border-box;
+
+    width: 120px;
+    height: 120px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border: 2px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+
+    cursor: pointer;
+}
+
+.profile-image-option img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+/* 선택된 프로필 */
+
+.profile-image-option.selected {
+    border-color: #000000;
+}
+
+/* 완료 버튼 */
+
+.profile-image-modal .small-button {
+    margin-top: 33px;
+}

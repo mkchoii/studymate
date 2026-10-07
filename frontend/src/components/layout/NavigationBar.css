@@ -1,0 +1,31 @@
+.navigation-bar {
+    box-sizing: border-box;
+    width: 100%;
+    height: 56px;
+
+    display: flex;
+
+    background: #FFFFFF;
+    border-bottom: 1px solid #000000;
+}
+
+.navigation-item {
+    flex: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+
+    color: #ACACAC;
+}
+
+.navigation-item.active {
+    color: #000000;
+}

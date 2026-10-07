@@ -1,0 +1,93 @@
+.category-chip {
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 4px 6px;
+
+    border: 1.5px solid transparent;
+    border-radius: 4px;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+
+    white-space: nowrap;
+}
+
+button.category-chip {
+    cursor: pointer;
+}
+
+/* 자격증 */
+.category-certificate {
+    color: #7990F8;
+    background: rgba(121, 144, 248, 0.1);
+}
+
+.category-certificate.selected {
+    border-color: #7990F8;
+}
+
+/* 어학 */
+.category-language {
+    color: #46CF8B;
+    background: rgba(70, 207, 139, 0.1);
+}
+
+.category-language.selected {
+    border-color: #46CF8B;
+}
+
+/* 면접 */
+.category-interview {
+    color: #BC5EAD;
+    background: rgba(188, 94, 173, 0.1);
+}
+
+.category-interview.selected {
+    border-color: #BC5EAD;
+}
+
+/* 자기소개서·포트폴리오 */
+.category-portfolio {
+    color: #F1AF75;
+    background: rgba(241, 175, 117, 0.1);
+}
+
+.category-portfolio.selected {
+    border-color: #F1AF75;
+}
+
+/* 직무·기업 탐색 */
+.category-career_exploration {
+    color: #E97CCC;
+    background: rgba(233, 124, 204, 0.1);
+}
+
+.category-career_exploration.selected {
+    border-color: #E97CCC;
+}
+
+/* 대외활동·프로젝트 */
+.category-activity_project {
+    color: #E57779;
+    background: rgba(229, 119, 121, 0.1);
+}
+
+.category-activity_project.selected {
+    border-color: #E57779;
+}
+
+/* 공부 */
+.category-study {
+    color: #908986;
+    background: rgba(144, 137, 134, 0.1);
+}
+
+.category-study.selected {
+    border-color: #908986;
+}

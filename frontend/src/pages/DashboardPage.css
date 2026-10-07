@@ -1,0 +1,400 @@
+.dashboard-page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+    background: #fff;
+}
+
+.dashboard-content {
+    box-sizing: border-box;
+    width: 395px;
+    margin: 12px auto 25px;
+}
+
+/* 더보기 */
+
+.dashboard-more-button {
+    width: 100%;
+    height: 21px;
+    padding: 0 6px 0 0;
+    border: none;
+    background: none;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 3px;
+
+    font-family: 'Inter';
+    font-size: 13px;
+    font-weight: 400;
+
+    cursor: pointer;
+}
+
+.dashboard-more-icon {
+    width: 9px;
+    height: 6px;
+    object-fit: contain;
+}
+
+/* 상단 카드 */
+
+.goal-summary-card {
+    box-sizing: border-box;
+    width: 395px;
+    height: 185px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.final-goal-section {
+    position: relative;
+    width: 199px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.goal-edit-button {
+    position: absolute;
+    top: 15px;
+    right: 12px;
+
+    padding: 0;
+    border: none;
+    background: none;
+
+    color: #acacac;
+    font-size: 20px;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+.goal-summary-label {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 500;
+    color: #acacac;
+}
+
+.final-goal-text {
+    width: 130px;
+    margin: 25px 0 0;
+
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.final-goal-text.empty {
+    color: #acacac;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.goal-summary-divider {
+    width: 1px;
+    height: 160px;
+    background: #000;
+}
+
+.weekly-progress-section {
+    width: 195px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weekly-progress-title {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 500;
+    color: #acacac;
+}
+
+.weekly-progress-bar {
+    box-sizing: border-box;
+    width: 143px;
+    height: 12px;
+    margin-top: 8px;
+
+    overflow: hidden;
+
+    border: 1px solid #d6d6d6;
+    border-radius: 18px;
+}
+
+.weekly-progress-value {
+    height: 100%;
+    background: #d6d6d6;
+}
+
+.weekly-counts {
+    height: 56px;
+    margin-top: 13px;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.weekly-counts > div:not(.weekly-count-divider) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.weekly-counts span {
+    font-size: 12px;
+}
+
+.weekly-counts strong {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.weekly-count-divider {
+    width: 1px;
+    height: 56px;
+    background: #6c6c6c;
+}
+
+.completed-count {
+    color: #6c6c6c;
+}
+
+/* 주간 캘린더 */
+
+.week-calendar {
+    margin-top: 19px;
+}
+
+.week-calendar-title {
+    margin: 0 0 10px 4px;
+
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+}
+
+.week-calendar-list {
+    width: 392px;
+
+    display: flex;
+    gap: 10px;
+}
+
+.week-date-card {
+    box-sizing: border-box;
+    flex: 1;
+    height: 54px;
+
+    padding: 7px 6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+
+    color: rgba(18, 18, 18, 0.5);
+
+    cursor: pointer;
+}
+
+.week-date-card span {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+}
+
+.week-date-card strong {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 21px;
+}
+
+.week-date-card.selected {
+    background: #f4f4f4;
+    border-color: #000;
+    color: #000;
+}
+
+/* 세부목표 */
+
+.task-section {
+    margin-top: 12px;
+}
+
+.goal-manage-button {
+    height: 25px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+
+    border: none;
+    border-radius: 4px;
+
+    background: rgba(214, 214, 214, 0.5);
+
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(18, 18, 18, 0.5);
+
+    cursor: pointer;
+}
+
+.task-list-card {
+    box-sizing: border-box;
+    width: 395px;
+    height: 420px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+
+    padding: 13px 16px;
+
+    border: 1px solid #000;
+    border-radius: 8px;
+}
+
+.goal-task-group {
+    width: 100%;
+}
+
+.goal-task-group + .goal-task-group {
+    margin-top: 10px;
+}
+
+.goal-task-header {
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.goal-task-title-area {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.add-task-button {
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #acacac;
+    border-radius: 50%;
+    background: #fff;
+
+    cursor: pointer;
+}
+
+.expand-button {
+    padding: 0;
+    border: none;
+    background: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.expand-icon {
+    width: 10px;
+    height: auto;
+    object-fit: contain;
+}
+
+.goal-task-rows {
+    margin: 4px 0 0 9px;
+}
+
+.task-row {
+    width: 329px;
+    height: 30px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    border: none;
+    background: none;
+
+    color: #121212;
+
+    cursor: pointer;
+}
+
+.task-checkbox-button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.task-checkbox-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.task-name-button {
+    padding: 0;
+    border: none;
+    background: none;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: #121212;
+
+    cursor: pointer;
+}
+
+.task-row.completed .task-name-button {
+    color: #ACACAC;
+}
