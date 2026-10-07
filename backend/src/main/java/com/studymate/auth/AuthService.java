@@ -2,6 +2,7 @@ package com.studymate.auth;
 
 import com.studymate.BusinessException;
 import com.studymate.auth.dto.EmailCheckResponse;
+import com.studymate.goal.GoalRepository;
 import com.studymate.invite.InviteRepository;
 import com.studymate.auth.dto.LoginRequest;
 import com.studymate.auth.dto.LoginResponse;
@@ -23,6 +24,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final InviteRepository inviteRepository;
     private final PasswordEncoder passwordEncoder;
+    private final GoalRepository goalRepository;
 
     private static final List<String> ADJECTIVES = List.of(
             "배고픈",
@@ -122,6 +124,8 @@ public class AuthService {
             throw new BusinessException(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 올바르지 않습니다.");
         }
 
-        return new LoginResponse(user.getId(), user.getRole());
+        boolean hasGoal = goalRepository.existsByUserId(user.getId());
+
+        return new LoginResponse(user.getId(), user.getRole(), hasGoal);
     }
 }

@@ -10,4 +10,5 @@ public class LoginResponse {
 
     private Integer userId;
     private Role role;
+    private boolean hasGoal;
 }

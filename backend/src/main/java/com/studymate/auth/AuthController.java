@@ -32,9 +32,30 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request, HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 
         SignupResponse response = authService.signup(request);
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        response.getUserId(),
+                        null,
+                        List.of(
+                                new SimpleGrantedAuthority("ROLE_USER")
+                        )
+                );
+
+        SecurityContext context =
+                SecurityContextHolder.createEmptyContext();
+
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        securityContextRepository.saveContext(
+                context,
+                httpRequest,
+                httpResponse
+        );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
