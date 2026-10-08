@@ -1,6 +1,8 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function getMyStudy() {
     const response = await fetch(
-        'http://localhost:8080/studies/me',
+        `${API_BASE_URL}/studies/me`,
         {
             method: 'GET',
             credentials: 'include',
@@ -26,8 +28,8 @@ export async function getMyStudy() {
 export async function getStudies(category) {
     const url =
         category === 'ALL'
-            ? 'http://localhost:8080/studies'
-            : `http://localhost:8080/studies?category=${category}`;
+            ? `${API_BASE_URL}/studies`
+            : `${API_BASE_URL}/studies?category=${category}`;
 
     const response = await fetch(url, {
         method: 'GET',
@@ -52,7 +54,7 @@ export async function getStudies(category) {
 
 export async function getMatchingGoals(studyId) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}/matching-goals`,
+        `${API_BASE_URL}/studies/${studyId}/matching-goals`,
         {
             method: 'GET',
             credentials: 'include',
@@ -75,7 +77,7 @@ export async function getMatchingGoals(studyId) {
 
 export async function joinStudy(studyId, goalIds) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}/members`,
+        `${API_BASE_URL}/studies/${studyId}/members`,
         {
             method: 'POST',
             headers: {
@@ -102,7 +104,7 @@ export async function joinStudy(studyId, goalIds) {
 
 export async function getStudyDashboard(studyId) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}/dashboard`,
+        `${API_BASE_URL}/studies/${studyId}/dashboard`,
         {
             method: 'GET',
             credentials: 'include',
@@ -125,7 +127,7 @@ export async function getStudyDashboard(studyId) {
 
 export async function getStudyMemberDetail(studyId, studyMemberId) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}/members/${studyMemberId}`,
+        `${API_BASE_URL}/studies/${studyId}/members/${studyMemberId}`,
         {
             method: 'GET',
             credentials: 'include',
@@ -150,7 +152,7 @@ export async function getStudyMemberDetail(studyId, studyMemberId) {
 
 export async function updateStudy(studyId, { studyName, category, maxMembers }) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}`,
+        `${API_BASE_URL}/studies/${studyId}`,
         {
             method: 'PATCH',
             headers: {
@@ -183,7 +185,7 @@ export async function updateStudy(studyId, { studyName, category, maxMembers }) 
 
 export async function deleteStudyMember(studyId, studyMemberId) {
     const response = await fetch(
-        `http://localhost:8080/studies/${studyId}/members/${studyMemberId}`,
+        `${API_BASE_URL}/studies/${studyId}/members/${studyMemberId}`,
         {
             method: 'DELETE',
             credentials: 'include',
@@ -196,7 +198,7 @@ export async function deleteStudyMember(studyId, studyMemberId) {
 }
 
 export async function createStudy(studyName, category, maxMembers) {
-    const response = await fetch('http://localhost:8080/studies', {
+    const response = await fetch(`${API_BASE_URL}/studies`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

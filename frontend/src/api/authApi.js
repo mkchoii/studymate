@@ -1,5 +1,7 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function checkEmail(email) {
-    const response = await fetch('http://localhost:8080/auth/email-check', {
+    const response = await fetch(`${API_BASE_URL}/auth/email-check`, {
         method: 'POST',
 
         headers: {
@@ -23,7 +25,7 @@ export async function checkEmail(email) {
 }
 
 export async function signup(email, password) {
-    const response = await fetch('http://localhost:8080/signup', {
+    const response = await fetch(`${API_BASE_URL}/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -45,7 +47,7 @@ export async function signup(email, password) {
 }
 
 export async function login(email, password) {
-    const response = await fetch('http://localhost:8080/login', {
+    const response = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ export async function login(email, password) {
 }
 
 export async function logout() {
-    const response = await fetch('http://localhost:8080/logout', {
+    const response = await fetch(`${API_BASE_URL}/logout`, {
         method: 'POST',
         credentials: 'include',
     });

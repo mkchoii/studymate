@@ -1,7 +1,9 @@
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export async function getDashboard(date) {
     const url = date
-        ? `http://localhost:8080/dashboard?date=${date}`
-        : 'http://localhost:8080/dashboard';
+        ? `${API_BASE_URL}/dashboard?date=${date}`
+        : `${API_BASE_URL}/dashboard`;
 
     const response = await fetch(url, {
         method: 'GET',
@@ -36,7 +38,7 @@ export async function getDashboard(date) {
 
 export async function updateTaskCompletion(taskId, isCompleted) {
     const response = await fetch(
-        `http://localhost:8080/tasks/${taskId}/completion`,
+        `${API_BASE_URL}/tasks/${taskId}/completion`,
         {
             method: 'PATCH',
             headers: {
@@ -71,7 +73,7 @@ export async function updateTaskCompletion(taskId, isCompleted) {
 
 export async function updateTask(taskId, content) {
     const response = await fetch(
-        `http://localhost:8080/tasks/${taskId}`,
+        `${API_BASE_URL}/tasks/${taskId}`,
         {
             method: 'PATCH',
             headers: {
@@ -102,7 +104,7 @@ export async function updateTask(taskId, content) {
 
 export async function deleteTask(taskId) {
     const response = await fetch(
-        `http://localhost:8080/tasks/${taskId}`,
+        `${API_BASE_URL}/tasks/${taskId}`,
         {
             method: 'DELETE',
             credentials: 'include',
@@ -125,7 +127,7 @@ export async function deleteTask(taskId) {
 
 export async function createTask(goalId, taskDate, content) {
     const response = await fetch(
-        'http://localhost:8080/tasks',
+        `${API_BASE_URL}/tasks`,
         {
             method: 'POST',
             headers: {
