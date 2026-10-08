@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CATEGORIES } from '../CATEGORIES';
+import { CATEGORIES } from '../categories';
 import CategoryChip from '../components/CategoryChip';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
