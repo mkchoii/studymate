@@ -1,7 +1,7 @@
 .category-chip {
     height: 30px;
 
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 

@@ -1,0 +1,35 @@
+.study-category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px 10px;
+}
+
+/* 전체 필터 */
+
+.study-all-chip {
+    box-sizing: border-box;
+    height: 30px;
+    padding: 4px 6px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 1.5px solid transparent;
+    border-radius: 4px;
+
+    background: rgba(77, 68, 158, 0.1);
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    color: #4d449e;
+
+    cursor: pointer;
+}
+
+.study-all-chip.selected {
+    border-color: #4d449e;
+}

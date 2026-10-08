@@ -1,0 +1,96 @@
+.study-goal-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.study-goal-modal {
+    position: relative;
+    box-sizing: border-box;
+
+    width: min(381px, calc(100vw - 32px));
+    height: 249px;
+
+    background: #fff;
+    border-radius: 20px;
+}
+
+.study-goal-modal-close {
+    position: absolute;
+    top: 13px;
+    right: 18px;
+
+    width: 15px;
+    height: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: none;
+
+    font-size: 25px;
+    font-weight: 300;
+    color: #000;
+
+    cursor: pointer;
+}
+
+.study-goal-modal-description {
+    position: absolute;
+    top: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 269px;
+    text-align: center;
+}
+
+.study-goal-modal-title {
+    margin: 0;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+
+    color: #000;
+}
+
+.study-goal-modal-subtitle {
+    margin: 4px 0 0;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+
+    color: #8b8b8b;
+}
+
+.study-goal-modal-goals {
+    position: absolute;
+    top: 137px;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.study-goal-modal-action {
+    position: absolute;
+    top: 184px;
+    left: 50%;
+    transform: translateX(-50%);
+}

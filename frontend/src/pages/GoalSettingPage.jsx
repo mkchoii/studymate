@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { CATEGORIES } from '../CATEGORIES';
 import CategoryChip from '../components/CategoryChip';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
@@ -8,16 +9,6 @@ import trashIcon from '../assets/icons/trash.svg';
 import { createGoal } from '../api/goalApi';
 
 import './GoalSettingPage.css';
-
-const categories = [
-    { value: 'CERTIFICATE', label: '자격증', placeholder: '정보처리기사, ADsP 등 입력'},
-    { value: 'LANGUAGE', label: '어학', placeholder: '토익스피킹, OPIc, 토플 등 입력' },
-    { value: 'INTERVIEW', label: '면접', placeholder: '기술 면접, 인성 면접 등 입력' },
-    { value: 'PORTFOLIO', label: '자기소개서·포트폴리오', placeholder: '자기소개서, 포트폴리오 등 입력' },
-    { value: 'CAREER_EXPLORATION', label: '직무·기업 탐색', placeholder: '백엔드 개발, 데이터 분석 등 입력' },
-    { value: 'ACTIVITY_PROJECT', label: '대외활동·프로젝트', placeholder: '공모전, 팀 프로젝트 등 입력' },
-    { value: 'STUDY', label: '공부', placeholder: '기타 공부 내용 입력' },
-];
 
 function GoalSettingPage() {
     const navigate = useNavigate();
@@ -27,7 +18,7 @@ function GoalSettingPage() {
     const [category, setCategory] = useState(null);
     const [goalName, setGoalName] = useState('');
     const [goalNameError, setGoalNameError] = useState('none');
-    const selectedCategory = categories.find(
+    const selectedCategory = CATEGORIES.find(
         (item) => item.value === category
     );
 
@@ -103,7 +94,7 @@ function GoalSettingPage() {
                     </div>
 
                     <div className="category-list">
-                        {categories.map((item) => (
+                        {CATEGORIES.map((item) => (
                             <CategoryChip
                                 key={item.value}
                                 category={item}

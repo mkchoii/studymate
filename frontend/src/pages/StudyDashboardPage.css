@@ -1,0 +1,87 @@
+.study-dashboard-page {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+
+    background: #FFFFFF;
+}
+
+.study-dashboard-container {
+    width: 100%;
+    max-width: 430px;
+    min-height: 100vh;
+
+    background: #FFFFFF;
+}
+
+.study-dashboard-content {
+    width: 387px;
+    max-width: calc(100% - 42px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.study-dashboard-list-button {
+    align-self: flex-end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+}
+
+.study-dashboard-list-icon {
+    width: 9px;
+    height: 6px;
+    object-fit: contain;
+}
+
+.study-dashboard-message {
+    margin-top: 24px;
+    text-align: center;
+}
+
+/* 스터디 정보 카드 */
+
+.study-profile-card {
+    height: 74px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #000;
+    border-radius: 10px;
+}
+
+.study-profile-name {
+    margin: 0px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.study-profile-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 7px;
+    margin-top: 7px;
+}
+
+.study-profile-members {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+}
+
+.study-profile-members img {
+    width: 16px;
+    height: 16px;
+}

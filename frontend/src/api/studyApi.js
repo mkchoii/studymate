@@ -1,0 +1,149 @@
+export async function getMyStudy() {
+    const response = await fetch(
+        'http://localhost:8080/studies/me',
+        {
+            method: 'GET',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let message = '스터디 정보를 불러오지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // 응답 body 없음
+        }
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
+
+export async function getStudies(category) {
+    const url =
+        category === 'ALL'
+            ? 'http://localhost:8080/studies'
+            : `http://localhost:8080/studies?category=${category}`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        let message = '스터디 목록을 불러오지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // 응답 body 없음
+        }
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
+
+export async function getMatchingGoals(studyId) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}/matching-goals`,
+        {
+            method: 'GET',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let message = '연동 가능한 세부목표를 불러오지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {}
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
+
+export async function joinStudy(studyId, goalIds) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}/members`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({ goalIds }),
+        }
+    );
+
+    if (!response.ok) {
+        let message = '스터디 가입에 실패했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {}
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
+
+export async function getStudyDashboard(studyId) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}/dashboard`,
+        {
+            method: 'GET',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let message = '팀 대시보드를 불러오지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {}
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
+
+export async function getStudyMemberDetail(studyId, studyMemberId) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}/members/${studyMemberId}`,
+        {
+            method: 'GET',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        let message = '멤버 상세 정보를 불러오지 못했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // 기본 오류 메시지 사용
+        }
+
+        throw new Error(message);
+    }
+
+    return await response.json();
+}
