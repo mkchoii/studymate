@@ -1,0 +1,17 @@
+.admin-header {
+    position: relative;
+    width: 100%;
+}
+
+.admin-logout-button {
+    position: absolute;
+    right: 0;
+    bottom: 7px;
+
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}

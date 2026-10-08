@@ -147,3 +147,71 @@ export async function getStudyMemberDetail(studyId, studyMemberId) {
 
     return await response.json();
 }
+
+export async function updateStudy(studyId, { studyName, category, maxMembers }) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}`,
+        {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                studyName,
+                category,
+                maxMembers,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        let message = '스터디 수정에 실패했습니다.';
+
+        try {
+            const data = await response.json();
+            message = data.message || message;
+        } catch {
+            // 기본 오류 메시지 사용
+        }
+
+        throw new Error(message);
+    }
+
+    return response.json();
+}
+
+export async function deleteStudyMember(studyId, studyMemberId) {
+    const response = await fetch(
+        `http://localhost:8080/studies/${studyId}/members/${studyMemberId}`,
+        {
+            method: 'DELETE',
+            credentials: 'include',
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error('멤버 강퇴에 실패했습니다.');
+    }
+}
+
+export async function createStudy(studyName, category, maxMembers) {
+    const response = await fetch('http://localhost:8080/studies', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+            studyName,
+            category,
+            maxMembers,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error('스터디 개설에 실패했습니다.');
+    }
+
+    return response.json();
+}

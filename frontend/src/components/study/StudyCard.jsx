@@ -27,7 +27,7 @@ function StudyCard({
             </div>
             
             <div className="study-card-bottom">
-              <div className="study-member-info">
+              <div className="study-card-member-info">
                 <img
                   src={peopleIcon}
                   alt=""

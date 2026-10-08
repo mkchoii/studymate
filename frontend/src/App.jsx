@@ -7,6 +7,11 @@ import SignupCompletePage from './pages/SignupCompletePage';
 import MyPage from './pages/MyPage';
 import PasswordChangePage from './pages/PasswordChangePage';
 import DashboardPage from './pages/DashboardPage';
+import StudyPage from './pages/StudyPage';
+import StudyListPage from './pages/StudyListPage';
+import AdminStudyListPage from './pages/AdminStudyListPage';
+import AdminStudyManagePage from './pages/AdminStudyManagePage';
+import AdminStudyCreatePage from './pages/AdminStudyCreatePage';
 
 function App() {
     return (
@@ -20,6 +25,10 @@ function App() {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/password-change" element={<PasswordChangePage />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
+                <Route path="/study/*" element={<StudyPage />} />
+                <Route path="/admin" element={<AdminStudyListPage />} />
+                <Route path="/admin/studies/:studyId" element={<AdminStudyManagePage />} />
+                <Route path="/admin/studies/new" element={<AdminStudyCreatePage />} />
             </Routes>
         </BrowserRouter>
     );

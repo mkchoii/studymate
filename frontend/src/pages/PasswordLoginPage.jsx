@@ -30,10 +30,12 @@ function PasswordLoginPage() {
         try {
             const data = await login(email, pinValue);
 
-            if (data.hasGoal) {
-                navigate('/dashboard');
+            if (data.role === 'ADMIN') {
+                navigate('/admin', { replace: true });
+            } else if (data.hasGoal) {
+                navigate('/dashboard', { replace: true });
             } else {
-                navigate('/goal-setting');
+                navigate('/goal-setting', { replace: true });
             }
         } catch (error) {
             setErrorState('invalid');

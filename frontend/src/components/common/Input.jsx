@@ -12,7 +12,7 @@ function Input({
     return (
         <div className="input-wrapper">
             <input
-                className={`input ${errorMessage ? 'input-error' : ''}`}
+                className={`input ${errorMessage ? 'input-error' : ''} ${className}`}
                 type={type}
                 placeholder={placeholder}
                 value={value}

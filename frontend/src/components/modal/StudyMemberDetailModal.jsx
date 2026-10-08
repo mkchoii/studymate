@@ -5,8 +5,15 @@ import './StudyMemberDetailModal.css';
 import closeIcon from '../../assets/icons/close.svg';
 import checkboxEmptyIcon from '../../assets/icons/checkbox-empty.svg';
 import checkboxCheckedIcon from '../../assets/icons/checkbox-checked.svg';
+import SmallButton from '../common/SmallButton';
 
-function StudyMemberDetailModal({ member, goals = [], onClose }) {
+function StudyMemberDetailModal({ 
+    member, 
+    goals = [], 
+    onClose,
+    isAdmin = false,
+    onKick,
+}) {
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') onClose();
@@ -90,6 +97,13 @@ function StudyMemberDetailModal({ member, goals = [], onClose }) {
                         </p>
                     )}
                 </div>
+                {isAdmin && (
+                    <div className="study-member-modal-actions">
+                        <SmallButton onClick={() => onKick(member)}>
+                            강퇴하기
+                        </SmallButton>
+                    </div>
+                )}
             </div>
         </div>
     );
