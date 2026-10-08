@@ -3,6 +3,8 @@ package com.studymate.user;
 import com.studymate.BusinessException;
 import com.studymate.goal.GoalRepository;
 import com.studymate.invite.InviteRepository;
+import com.studymate.study.StudyMemberGoal;
+import com.studymate.study.StudyMemberGoalRepository;
 import com.studymate.study.StudyMemberRepository;
 import com.studymate.task.TaskRepository;
 import com.studymate.user.dto.*;
@@ -24,6 +26,7 @@ public class UserService {
     private final GoalRepository goalRepository;
     private final StudyMemberRepository studyMemberRepository;
     private final InviteRepository inviteRepository;
+    private final StudyMemberGoalRepository studyMemberGoalRepository;
 
     public FinalGoalResponse updateFinalGoal(Integer userId, FinalGoalRequest request) {
 
@@ -113,6 +116,7 @@ public class UserService {
                 ));
 
         taskRepository.deleteAllByGoalUserId(userId);
+        studyMemberGoalRepository.deleteAllByUserId(userId);
         goalRepository.deleteAllByUserId(userId);
         studyMemberRepository.deleteAllByUserId(userId);
 
