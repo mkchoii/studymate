@@ -1,5 +1,6 @@
 package com.studymate.study.dto;
 
+import com.studymate.goal.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,5 +12,6 @@ public class StudyMemberGoalResponse {
 
     private Integer goalId;
     private String goalName;
+    private Category category;
     private List<StudyMemberTaskResponse> tasks;
 }

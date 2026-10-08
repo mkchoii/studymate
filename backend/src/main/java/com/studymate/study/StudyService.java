@@ -342,6 +342,7 @@ public class StudyService {
                     return new StudyMemberGoalResponse(
                             goal.getId(),
                             goal.getGoalName(),
+                            goal.getCategory(),
                             taskResponses
                     );
                 })
