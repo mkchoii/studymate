@@ -7,4 +7,5 @@ import java.util.List;
 public interface StudyMemberGoalRepository extends JpaRepository<StudyMemberGoal, Integer> {
 
     List<StudyMemberGoal> findAllByStudyMemberId(Integer studyMemberId);
+    void deleteAllByStudyMemberId(Integer studyMemberId);
 }

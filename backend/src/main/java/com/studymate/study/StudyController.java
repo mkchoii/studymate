@@ -35,7 +35,7 @@ public class StudyController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{studyId}/members/{userId}")
+    @DeleteMapping("/{studyId}/members/{studyMemberId}")
     public ResponseEntity<Void> deleteStudyMember(@PathVariable Integer studyId, @PathVariable Integer studyMemberId) {
 
         studyService.deleteStudyMember(studyId, studyMemberId);
@@ -97,6 +97,16 @@ public class StudyController {
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
 
         StudyMemberDetailResponse response = studyService.getStudyMemberDetail(studyId, studyMemberId, userId, isAdmin);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<MyStudyResponse> getMyStudy(Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        MyStudyResponse response = studyService.getMyStudy(userId);
 
         return ResponseEntity.ok(response);
     }

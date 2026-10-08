@@ -9,6 +9,7 @@ import com.studymate.task.Task;
 import com.studymate.task.TaskRepository;
 import com.studymate.user.User;
 import com.studymate.user.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,7 @@ public class StudyService {
         );
     }
 
+    @Transactional
     public void deleteStudyMember(Integer studyId, Integer studyMemberId) {
 
         StudyMember studyMember = studyMemberRepository.findByIdAndStudyId(studyMemberId, studyId)
@@ -92,6 +94,7 @@ public class StudyService {
                         "스터디 회원을 찾을 수 없습니다."
                 ));
 
+        studyMemberGoalRepository.deleteAllByStudyMemberId(studyMember.getId());
         studyMemberRepository.delete(studyMember);
     }
 
@@ -167,6 +170,13 @@ public class StudyService {
                         HttpStatus.NOT_FOUND,
                         "사용자를 찾을 수 없습니다."
                 ));
+
+        if (studyMemberRepository.existsByUserId(userId)) {
+            throw new BusinessException(
+                    HttpStatus.BAD_REQUEST,
+                    "이미 가입한 스터디가 있습니다."
+            );
+        }
 
         if (studyMemberRepository.existsByStudyIdAndUserId(studyId, userId)) {
             throw new BusinessException(
@@ -372,5 +382,14 @@ public class StudyService {
                 .count();
 
         return (int) (completedCount * 100 / totalCount);
+    }
+
+    public MyStudyResponse getMyStudy(Integer userId) {
+
+        Integer studyId = studyMemberRepository.findByUserId(userId)
+                .map(studyMember -> studyMember.getStudy().getId())
+                .orElse(null);
+
+        return new MyStudyResponse(studyId);
     }
 }
