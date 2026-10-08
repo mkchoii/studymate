@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginEmailPage from './pages/LoginEmailPage';
 import PasswordSetupPage from './pages/PasswordSetupPage';
 import PasswordLoginPage from './pages/PasswordLoginPage';
@@ -17,6 +17,7 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Navigate to="/login" replace />} />
                 <Route path="/login" element={<LoginEmailPage />} />
                 <Route path="/signup/password" element={<PasswordSetupPage />} />
                 <Route path="/login/password" element={<PasswordLoginPage />} />
