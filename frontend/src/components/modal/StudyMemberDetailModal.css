@@ -51,26 +51,7 @@
 .study-member-modal-goals {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-}
-
-.study-member-modal-goal-name {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-height: 23px;
-    padding: 4px 6px;
-    box-sizing: border-box;
-
-    border-radius: 4px;
-    background: rgba(121, 144, 248, 0.1);
-
-    color: #7990f8;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 15px;
-    letter-spacing: 0.04em;
+    gap: 10px;
 }
 
 .study-member-modal-tasks {
@@ -78,7 +59,7 @@
     flex-direction: column;
     gap: 5px;
 
-    margin-top: 11px;
+    margin-top: 7px;
 }
 
 .study-member-modal-task {

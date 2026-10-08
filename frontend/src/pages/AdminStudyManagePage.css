@@ -112,6 +112,8 @@
 
     width: 387px;
     max-width: 100%;
+    max-height: 411px;
+    overflow-y: auto;
 
     margin: 15px auto 0;
     padding: 15px 18px 20px;

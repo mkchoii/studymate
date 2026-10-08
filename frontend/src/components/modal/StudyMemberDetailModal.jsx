@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import StudyMemberRow from '../study/StudyMemberRow';
 import './StudyMemberDetailModal.css';
+import CategoryChip from '../CategoryChip';
 import closeIcon from '../../assets/icons/close.svg';
 import checkboxEmptyIcon from '../../assets/icons/checkbox-empty.svg';
 import checkboxCheckedIcon from '../../assets/icons/checkbox-checked.svg';
@@ -62,10 +63,14 @@ function StudyMemberDetailModal({
                             className="study-member-modal-goal"
                             key={goal.goalId}
                         >
-                            <span className="study-member-modal-goal-name">
-                                {goal.goalName}
-                            </span>
-
+                            <CategoryChip
+                                category={{
+                                    value: goal.category,
+                                    label: goal.category,
+                                }}
+                                label={goal.goalName}
+                                size='small'
+                            />
                             <div className="study-member-modal-tasks">
                                 {(goal.tasks || []).map((task) => (
                                     <div
