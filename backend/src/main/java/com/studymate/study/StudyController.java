@@ -110,4 +110,14 @@ public class StudyController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/{studyId}/goals")
+    public ResponseEntity<Void> updateStudyGoal(@PathVariable Integer studyId, @RequestBody StudyGoalUpdateRequest request, Authentication authentication) {
+
+        Integer userId = (Integer) authentication.getPrincipal();
+
+        studyService.updateStudyGoal(studyId, userId, request);
+
+        return ResponseEntity.noContent().build();
+    }
 }

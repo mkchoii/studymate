@@ -18,7 +18,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -392,5 +395,71 @@ public class StudyService {
                 .orElse(null);
 
         return new MyStudyResponse(studyId);
+    }
+
+    @Transactional
+    public void updateStudyGoal(Integer studyId, Integer userId, StudyGoalUpdateRequest request) {
+
+        StudyMember studyMember = studyMemberRepository.findByStudyIdAndUserId(studyId, userId)
+                .orElseThrow(() -> new BusinessException(
+                        HttpStatus.NOT_FOUND,
+                        "스터디 회원이 존재하지 않습니다."
+                ));
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new BusinessException(
+                        HttpStatus.NOT_FOUND,
+                        "스터디가 존재하지 않습니다."
+                ));
+
+        // 기존에 연동된 목표 조회
+        List<StudyMemberGoal> linkedGoals = studyMemberGoalRepository.findAllByStudyMemberId(studyMember.getId());
+
+        Set<Integer> linkedGoalIds = linkedGoals.stream()
+                .map(studyMemberGoal -> studyMemberGoal.getGoal().getId())
+                .collect(Collectors.toSet());
+
+        // 새로 선택한 목표
+        Set<Integer> selectedGoalIds = new HashSet<>(request.getGoalIds());
+
+        List<Goal> selectedGoals = goalRepository.findAllById(selectedGoalIds);
+
+        if (selectedGoals.size() != selectedGoalIds.size()) {
+            throw new BusinessException(
+                    HttpStatus.BAD_REQUEST,
+                    "존재하지 않는 세부목표가 포함되어 있습니다."
+            );
+        }
+
+        for (Goal goal : selectedGoals) {
+            if (!goal.getUser().getId().equals(userId)) {
+                throw new BusinessException(
+                        HttpStatus.FORBIDDEN,
+                        "본인의 세부목표만 연동할 수 있습니다."
+                );
+            }
+
+            if (!goal.getCategory().equals(study.getCategory())) {
+                throw new BusinessException(
+                        HttpStatus.BAD_REQUEST,
+                        "스터디와 같은 카테고리의 세부목표만 연동할 수 있습니다."
+                );
+            }
+        }
+
+        // 연동 해제
+        List<StudyMemberGoal> toDelete = linkedGoals.stream()
+                .filter(studyMemberGoal -> !selectedGoalIds.contains(studyMemberGoal.getGoal().getId()))
+                .toList();
+
+        studyMemberGoalRepository.deleteAll(toDelete);
+
+        // 연동 추가
+        List<StudyMemberGoal> toAdd = selectedGoals.stream()
+                .filter(goal -> !linkedGoalIds.contains(goal.getId()))
+                .map(goal -> new StudyMemberGoal(studyMember, goal))
+                .toList();
+
+        studyMemberGoalRepository.saveAll(toAdd);
     }
 }

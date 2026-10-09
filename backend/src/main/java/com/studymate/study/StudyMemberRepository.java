@@ -21,4 +21,8 @@ public interface StudyMemberRepository extends JpaRepository<StudyMember, Intege
     void deleteAllByUserId(Integer userId);
     Optional<StudyMember> findByUserId(Integer userId);
     boolean existsByUserId(Integer userId);
+    Optional<StudyMember> findByStudyIdAndUserId(
+            Integer StudyId,
+            Integer UserId
+    );
 }

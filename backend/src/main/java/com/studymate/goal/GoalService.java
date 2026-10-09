@@ -2,6 +2,9 @@ package com.studymate.goal;
 
 import com.studymate.BusinessException;
 import com.studymate.goal.dto.*;
+import com.studymate.study.StudyMember;
+import com.studymate.study.StudyMemberGoalRepository;
+import com.studymate.study.StudyMemberRepository;
 import com.studymate.task.TaskRepository;
 import com.studymate.user.User;
 import com.studymate.user.UserRepository;
@@ -19,6 +22,7 @@ public class GoalService {
     private final GoalRepository goalRepository;
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
+    private final StudyMemberGoalRepository studyMemberGoalRepository;
 
     @Transactional
     public GoalResponse createGoal(Integer userId, GoalCreateRequest request) {
@@ -69,6 +73,7 @@ public class GoalService {
         return new GoalListResponse(goals);
     }
 
+    @Transactional
     public GoalResponse updateGoal(Integer userId, Integer goalId, GoalUpdateRequest request) {
 
         if (request.getCategory() == null && request.getGoalName() == null) {
@@ -92,6 +97,12 @@ public class GoalService {
                 ));
 
         if (request.getCategory() != null) {
+            if (studyMemberGoalRepository.existsByGoalId(goalId)) {
+                throw new BusinessException(
+                        HttpStatus.CONFLICT,
+                        "연동된 세부목표의 카테고리는 변경할 수 없습니다."
+                );
+            }
             goal.updateCategory(request.getCategory());
         }
 
@@ -124,6 +135,13 @@ public class GoalService {
             throw new BusinessException(
                     HttpStatus.BAD_REQUEST,
                     "세부목표는 최소 1개 이상 존재해야 합니다."
+            );
+        }
+
+        if (studyMemberGoalRepository.existsByGoalId(goalId)) {
+            throw new BusinessException(
+                    HttpStatus.CONFLICT,
+                    "연동된 세부목표는 삭제할 수 없습니다."
             );
         }
 
