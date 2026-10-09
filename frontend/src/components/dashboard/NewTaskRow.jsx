@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import checkboxEmptyIcon from '../../assets/icons/checkbox-empty.svg';
+import './TaskRow.css';
 
 function NewTaskRow({ onCreate, onCancel }) {
     const [content, setContent] = useState('');

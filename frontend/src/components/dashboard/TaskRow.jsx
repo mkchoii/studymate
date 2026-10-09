@@ -1,5 +1,6 @@
 import checkboxEmptyIcon from '../../assets/icons/checkbox-empty.svg';
 import checkboxCheckedIcon from '../../assets/icons/checkbox-checked.svg';
+import './TaskRow.css';
 
 function TaskRow({ task, onCheckTask, onClickTask }) {
     return (

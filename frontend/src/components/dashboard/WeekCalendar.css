@@ -1,0 +1,57 @@
+.week-calendar {
+    margin-top: 19px;
+}
+
+.week-calendar-title {
+    margin: 0 0 10px 4px;
+
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+}
+
+.week-calendar-list {
+    width: 392px;
+
+    display: flex;
+    gap: 10px;
+}
+
+.week-date-card {
+    box-sizing: border-box;
+    flex: 1;
+    height: 54px;
+
+    padding: 7px 6px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+
+    background: #fff;
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+
+    color: rgba(18, 18, 18, 0.5);
+
+    cursor: pointer;
+}
+
+.week-date-card span {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 15px;
+}
+
+.week-date-card strong {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 21px;
+}
+
+.week-date-card.selected {
+    background: #f4f4f4;
+    border-color: #000;
+    color: #000;
+}

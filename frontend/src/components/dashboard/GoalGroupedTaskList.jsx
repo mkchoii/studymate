@@ -9,6 +9,8 @@ import chevronUpIcon from '../../assets/icons/chevron-up.svg';
 import chevronDownIcon from '../../assets/icons/chevron-down.svg';
 import addTaskIcon from '../../assets/icons/add.svg';
 
+import './GoalGroupedTaskList.css';
+
 function GoalGroupedTaskList({ 
     goal, 
     selectedDate,

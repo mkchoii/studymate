@@ -1,3 +1,5 @@
+import './WeekCalendar.css';
+
 function WeekCalendar({ selectedDate, onSelectDate }) {
     const dayLabels = ['월', '화', '수', '목', '금', '토', '일'];
 

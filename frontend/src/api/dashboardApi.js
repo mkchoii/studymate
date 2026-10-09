@@ -123,6 +123,8 @@ export async function deleteTask(taskId) {
 
         throw new Error(message);
     }
+
+    return response.json();
 }
 
 export async function createTask(goalId, taskDate, content) {

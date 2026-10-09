@@ -1,9 +1,11 @@
 package com.studymate.task;
 
 import com.studymate.BusinessException;
+import com.studymate.ProgressService;
 import com.studymate.goal.Goal;
 import com.studymate.goal.GoalRepository;
 import com.studymate.task.dto.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TaskService {
 
+    private final ProgressService progressService;
+
     private final TaskRepository taskRepository;
     private final GoalRepository goalRepository;
 
+    @Transactional
     public TaskResponse createTask(Integer userId, TaskCreateRequest request) {
 
         Goal goal = goalRepository.findByIdAndUserId(request.getGoalId(), userId)
@@ -31,16 +36,21 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
+        ProgressResponse progress = progressService.getProgress(userId);
+
         return new TaskResponse(
                 savedTask.getId(),
                 savedTask.getGoal().getId(),
                 savedTask.getTaskDate(),
                 savedTask.getContent(),
                 savedTask.getCreatedAt(),
-                savedTask.isCompleted()
+                savedTask.isCompleted(),
+                progress.getWeeklyProgress(),
+                progress.getGoalProgress()
         );
     }
 
+    @Transactional
     public TaskResponse updateTask(Integer userId, Integer taskId, TaskUpdateRequest request) {
 
         Task task = taskRepository.findByIdAndGoalUserId(taskId, userId)
@@ -59,11 +69,14 @@ public class TaskService {
                 savedTask.getTaskDate(),
                 savedTask.getContent(),
                 savedTask.getCreatedAt(),
-                savedTask.isCompleted()
+                savedTask.isCompleted(),
+                null,
+                null
         );
     }
 
-    public void deleteTask(Integer userId, Integer taskId) {
+    @Transactional
+    public ProgressResponse deleteTask(Integer userId, Integer taskId) {
 
         Task task = taskRepository.findByIdAndGoalUserId(taskId, userId)
                 .orElseThrow(() -> new BusinessException(
@@ -72,8 +85,11 @@ public class TaskService {
                 ));
 
         taskRepository.delete(task);
+
+        return progressService.getProgress(userId);
     }
 
+    @Transactional
     public TaskCompletionResponse completeTask(Integer userId, Integer taskId, TaskCompletionRequest request) {
 
         Task task = taskRepository.findByIdAndGoalUserId(taskId, userId)
@@ -86,9 +102,13 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
+        ProgressResponse progress = progressService.getProgress(userId);
+
         return new TaskCompletionResponse(
                 savedTask.getId(),
-                savedTask.isCompleted()
+                savedTask.isCompleted(),
+                progress.getWeeklyProgress(),
+                progress.getGoalProgress()
         );
     }
 }

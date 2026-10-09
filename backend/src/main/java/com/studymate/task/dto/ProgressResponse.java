@@ -9,10 +9,8 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class TaskCompletionResponse {
+public class ProgressResponse {
 
-    private Integer taskId;
-    private boolean isCompleted;
     private WeeklyProgressResponse weeklyProgress;
     private List<GoalProgressResponse> goalProgress;
 }

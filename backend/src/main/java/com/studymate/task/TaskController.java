@@ -38,13 +38,13 @@ public class TaskController {
     }
 
     @DeleteMapping("/{taskId}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Integer taskId, Authentication authentication) {
+    public ResponseEntity<ProgressResponse> deleteTask(@PathVariable Integer taskId, Authentication authentication) {
 
         Integer userId = (Integer) authentication.getPrincipal();
 
-        taskService.deleteTask(userId, taskId);
+        ProgressResponse response = taskService.deleteTask(userId, taskId);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{taskId}/completion")

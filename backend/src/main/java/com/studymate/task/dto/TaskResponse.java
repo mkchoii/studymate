@@ -1,10 +1,13 @@
 package com.studymate.task.dto;
 
+import com.studymate.dashboard.dto.GoalProgressResponse;
+import com.studymate.dashboard.dto.WeeklyProgressResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -16,4 +19,6 @@ public class TaskResponse {
     private String content;
     private LocalDateTime createdAt;
     private Boolean isCompleted;
+    private WeeklyProgressResponse weeklyProgress;
+    private List<GoalProgressResponse> goalProgress;
 }

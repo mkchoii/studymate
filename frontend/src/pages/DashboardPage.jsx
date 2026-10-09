@@ -24,17 +24,13 @@ import './DashboardPage.css';
 
 function DashboardPage() {
     const [dashboard, setDashboard] = useState(null);
-
     const [topCardMode, setTopCardMode] = useState('finalGoal');
-
     const [isFinalGoalEditModalOpen, setIsFinalGoalEditModalOpen] = useState(false);
-
     const [isGoalManagementOpen, setIsGoalManagementOpen] = useState(false);
-
     const [finalGoalInput, setFinalGoalInput] = useState('');
-
     const [selectedGoalId, setSelectedGoalId] = useState(null);
 
+    // 대시보드 조회 및 날짜 선택
     const loadDashboard = async (date) => {
         try {
             const data = await getDashboard(date);
@@ -48,6 +44,12 @@ function DashboardPage() {
         loadDashboard();
     }, []);
 
+
+    const handleSelectDate = (date) => {
+        loadDashboard(date);
+    };
+
+    // 상단 카드 더보기
     const handleClickMore = () => {
         if (topCardMode === 'finalGoal') {
             const goals = dashboard.goalProgress;
@@ -68,121 +70,8 @@ function DashboardPage() {
         }
     };
 
-    const handleSelectDate = (date) => {
-        loadDashboard(date);
-    };
-
-    const handleCheckTask = async (taskId, isCompleted) => {
-        try {
-            const updatedTask = await updateTaskCompletion(
-                taskId,
-                !isCompleted
-            );
-
-            setDashboard((prev) => ({
-                ...prev,
-                goals: prev.goals.map((goal) => ({
-                    ...goal,
-                    tasks: goal.tasks.map((task) =>
-                        task.taskId === updatedTask.taskId
-                            ? {
-                                ...task,
-                                isCompleted: updatedTask.isCompleted,
-                            }
-                            : task
-                    ),
-                })),
-            }));
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleEditTask = async (taskId, content) => {
-        try {
-            const updatedTask = await updateTask(taskId, content);
-
-            setDashboard((prev) => ({
-                ...prev,
-                goals: prev.goals.map((goal) => ({
-                    ...goal,
-                    tasks: goal.tasks.map((task) =>
-                        task.taskId === updatedTask.taskId
-                            ? {
-                                ...task,
-                                content: updatedTask.content,
-                            }
-                            : task
-                    ),
-                })),
-            }));
-
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    };
-
-    const handleDeleteTask = async (taskId) => {
-        try {
-            await deleteTask(taskId);
-
-            setDashboard((prev) => ({
-                ...prev,
-                goals: prev.goals.map((goal) => ({
-                    ...goal,
-                    tasks: goal.tasks.filter(
-                        (task) => task.taskId !== taskId
-                    ),
-                })),
-            }));
-
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    };
-
-    const handleCreateTask = async (
-        goalId,
-        taskDate,
-        content
-    ) => {
-        try {
-            const createdTask = await createTask(
-                goalId,
-                taskDate,
-                content
-            );
-
-            setDashboard((prev) => ({
-                ...prev,
-                goals: prev.goals.map((goal) =>
-                    goal.goalId === createdTask.goalId
-                        ? {
-                            ...goal,
-                            tasks: [
-                                createdTask,
-                                ...goal.tasks,
-                            ],
-                        }
-                        : goal
-                ),
-            }));
-
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    };
-
     // 최종 목표 수정 팝업 열기
     const handleOpenFinalGoalEditPopup = () => {
-        console.log('최종 목표 수정 클릭');
-
         setFinalGoalInput(dashboard.finalGoal ?? '');
         setIsFinalGoalEditModalOpen(true);
     };
@@ -219,6 +108,173 @@ function DashboardPage() {
         }
     };
 
+    // 태스크 완료
+    const handleCheckTask = async (taskId, isCompleted) => {
+        try {
+            const data = await updateTaskCompletion(
+                taskId,
+                !isCompleted
+            );
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                // 달성률 갱신
+                weeklyProgress: data.weeklyProgress,
+                goalProgress: data.goalProgress,
+
+                // 태스크 완료 상태 갱신
+                goals: prev.goals.map((goal) => ({
+                    ...goal,
+                    tasks: goal.tasks.map((task) =>
+                        task.taskId === data.taskId
+                            ? {
+                                ...task,
+                                isCompleted: data.isCompleted,
+                            }
+                            : task
+                    ),
+                })),
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    // 태스크 수정
+    const handleEditTask = async (taskId, content) => {
+        try {
+            const data = await updateTask(taskId, content);
+
+            setDashboard((prev) => ({
+                ...prev,
+                goals: prev.goals.map((goal) => ({
+                    ...goal,
+                    tasks: goal.tasks.map((task) =>
+                        task.taskId === data.taskId
+                            ? {
+                                ...task,
+                                content: data.content,
+                            }
+                            : task
+                    ),
+                })),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    // 태스크 삭제
+    const handleDeleteTask = async (taskId) => {
+        try {
+            const data = await deleteTask(taskId);
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                // 달성률 갱신
+                weeklyProgress: data.weeklyProgress,
+                goalProgress: data.goalProgress,
+
+                // 태스크 삭제
+                goals: prev.goals.map((goal) => ({
+                    ...goal,
+                    tasks: goal.tasks.filter(
+                        (task) => task.taskId !== taskId
+                    ),
+                })),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    // 태스크 추가
+    const handleCreateTask = async (
+        goalId,
+        taskDate,
+        content
+    ) => {
+        try {
+            const data = await createTask(
+                goalId,
+                taskDate,
+                content
+            );
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                // 달성률 갱신
+                weeklyProgress: data.weeklyProgress,
+                goalProgress: data.goalProgress,
+
+                // 태스크 추가
+                goals: prev.goals.map((goal) =>
+                    goal.goalId === data.goalId
+                        ? {
+                            ...goal,
+                            tasks: [
+                                data,
+                                ...goal.tasks,
+                            ],
+                        }
+                        : goal
+                ),
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    // 세부 목표 생성
+    const handleCreateGoal = async (category, goalName) => {
+        try {
+            const createdGoal = await createGoal(
+                category,
+                goalName
+            );
+
+            setDashboard((prev) => ({
+                ...prev,
+
+                goals: [
+                    {
+                        ...createdGoal,
+                        tasks: [],
+                    },
+                    ...prev.goals,
+                ],
+
+                goalProgress: [
+                    {
+                        goalId: createdGoal.goalId,
+                        goalName: createdGoal.goalName,
+                        category: createdGoal.category,
+                        achievementRate: null,
+                    },
+                    ...prev.goalProgress,
+                ],
+            }));
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    };
+
+    // 세부 목표 수정
     const handleUpdateGoal = async (
         goalId,
         category,
@@ -261,6 +317,7 @@ function DashboardPage() {
         }
     };
 
+    // 세부 목표 삭제
     const handleDeleteGoal = async (goalId) => {
         try {
             await deleteGoal(goalId);
@@ -275,42 +332,6 @@ function DashboardPage() {
                 goalProgress: prev.goalProgress.filter(
                     (goal) => goal.goalId !== goalId
                 ),
-            }));
-
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        }
-    };
-
-    const handleCreateGoal = async (category, goalName) => {
-        try {
-            const createdGoal = await createGoal(
-                category,
-                goalName
-            );
-
-            setDashboard((prev) => ({
-                ...prev,
-
-                goals: [
-                    {
-                        ...createdGoal,
-                        tasks: [],
-                    },
-                    ...prev.goals,
-                ],
-
-                goalProgress: [
-                    {
-                        goalId: createdGoal.goalId,
-                        goalName: createdGoal.goalName,
-                        category: createdGoal.category,
-                        achievementRate: null,
-                    },
-                    ...prev.goalProgress,
-                ],
             }));
 
             return true;
