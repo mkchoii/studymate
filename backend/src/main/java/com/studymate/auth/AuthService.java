@@ -49,7 +49,11 @@ public class AuthService {
             "수달",
             "다람쥐",
             "펭귄",
-            "사자"
+            "사자",
+            "독수리",
+            "코끼리",
+            "햄스터",
+            "곰"
     );
 
     public EmailCheckResponse checkEmail(String email) {
